@@ -9,7 +9,7 @@ export class TweetService {
     constructor(@InjectModel(Tweet.name) private tweetModel: Model<TweetDocument>) {}
     
     async create(tweetDto: CreateTweetDto): Promise<Tweet> {
-        const createdCat = new this.tweetModel(tweetDto);
-        return createdCat.save();
+        const createdTweet = new this.tweetModel(tweetDto);
+        return createdTweet.save();
       }
 }
