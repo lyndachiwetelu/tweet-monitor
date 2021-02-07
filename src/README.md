@@ -35,7 +35,7 @@ You are now ready to use the app.
 
 
 ## To run the app:
-- Simply run `npm start` in your terminal, or command line, after cd ing into the app folder.
+- Simply run `npm install` and then `npm start` in your terminal, or command line, after cd ing into the app folder.
 
 ## Data Structure and Storage 
 This app saves tweets to a MongoDB store. The data Structure is 
