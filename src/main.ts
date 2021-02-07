@@ -14,7 +14,6 @@ async function bootstrap() {
     resolve(anomalyDetectionService.start())
   })
   await app.listen(3000);
-  // streamService.streamTweets()
   Promise.all([streamServicePromise, anomalyDetectionServicePromise])
 }
 bootstrap();
