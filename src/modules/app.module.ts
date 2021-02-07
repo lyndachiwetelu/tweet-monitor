@@ -10,6 +10,7 @@ import { AlertService } from '../services/alert.service';
 import { MetricModule } from './metric.module';
 import { MetricService } from '../services/metric.service';
 import * as dotenv from 'dotenv'
+import { TwitterApiService } from '../services/twitter.api.service';
 dotenv.config()
 
 const mongoUser = process.env.DB_USER
@@ -26,6 +27,6 @@ const mongoOptions = {
     MongooseModule.forRoot(`mongodb://${mongoUser}:${mongoUserPass}@localhost:27017/tweet-monitor`, mongoOptions),
   ],
   controllers: [AppController],
-  providers: [TweetService, StreamService, AnomalyDetectionService, ToxicityService, AlertService, MetricService],
+  providers: [TweetService, StreamService, AnomalyDetectionService, ToxicityService, AlertService, MetricService, TwitterApiService],
 })
 export class AppModule {}

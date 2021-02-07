@@ -16,4 +16,9 @@ export class TweetService {
     async getForTimeFrame(filter:any): Promise<Tweet[]> {
       return this.tweetModel.find(filter);
     }
+
+    // needed for mocking. there may be a more elegant way
+    static createInstanceWithoutConstructor() {
+      return Object.create(this.prototype);
+    }
 }

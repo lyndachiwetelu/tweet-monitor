@@ -70,3 +70,5 @@ Every 10 minutes, a process which was implemented with a simple setInterval chec
  ## To stop the app:
  - which is necessary so you don't go over your limit on Twitter's API, just press Ctrl + C
 
+## To run Automated Tests
+- run `npm run test` in your terminal or command line in the app folder.

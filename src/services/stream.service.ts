@@ -5,27 +5,19 @@ import { TweetService } from './tweet.service'
 import { createTweetDtoFromJson } from '../dto/create-tweet.dto'
 import * as dotenv from 'dotenv'
 import { Stream } from 'stream';
+import { TwitterApiService } from './twitter.api.service';
+import { Rule } from '../interfaces/rule.interface'
+import { Rules } from '../interfaces/rules.interface'
 dotenv.config()
-
-interface Rule {
-  value: string
-}
-
-interface Rules {
-  data?: Array<{id: number, value: string}>
-  meta: {
-    sent: string
-  }
-}
 
 @Injectable()
 export class StreamService {
   newRules: Array<Rule> = [{ value: `#${process.env.HASHTAG}`}]
   twitterStreamUrl: string = process.env.TWITTER_STREAM_URL
-  twitterRulesUrl: string = process.env.TWITTER_RULES_URL
   token: string = process.env.TOKEN
 
-  constructor(private readonly tweetService: TweetService) {}
+  constructor(private readonly tweetService: TweetService, 
+    private readonly apiService: TwitterApiService) {}
 
   // stream tweets and save to DB tweets collection
   async streamTweets(): Promise<Stream> {
@@ -63,36 +55,21 @@ export class StreamService {
       add: rules,
     }
     try {
-      const response = await needle('post', this.twitterRulesUrl, data, {
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${this.token}`,
-        },
-      })
-    
-      return new Promise<Rules>((resolve) => {
-        resolve(response.body);
-      });
+      const response = await this.apiService.postRules(data)
+      return new Promise(resolve =>  {resolve(response)})
 
     } catch(error) {
       console.log(error)
       exit(1)
-
     }
-    
   }
 
-  // get rules from the Twitter API
+  // Get rules from the Twitter API
   async getRules(): Promise<Rules> {
     try {
-      const response = await needle('get', this.twitterRulesUrl, {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      })
-  
+      const response = await this.apiService.getRules()
       return new Promise<Rules>((resolve) => {
-        resolve(response.body);
+        resolve(response);
       });
 
     } catch (error) {
@@ -107,6 +84,7 @@ export class StreamService {
     if (!Array.isArray(rules.data)) {
       return
     }
+    
     const ids = rules.data.map((rule) => rule.id)
   
     const data = {
@@ -114,16 +92,11 @@ export class StreamService {
         ids: ids,
       },
     }
-  
-    const response = await needle('post', this.twitterRulesUrl, data, {
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${this.token}`,
-      },
-    })
-  
-    return new Promise<Rules>((resolve) => {
-      resolve(response.body);
+
+    const response = await this.apiService.deleteRules(data)
+
+    return new Promise<any>((resolve) => {
+      resolve(response);
     });
   }
 
