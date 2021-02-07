@@ -11,5 +11,9 @@ export class TweetService {
     async create(tweetDto: CreateTweetDto): Promise<Tweet> {
         const createdTweet = new this.tweetModel(tweetDto);
         return createdTweet.save();
-      }
+    }
+
+    async getForTimeFrame(filter:any): Promise<Tweet[]> {
+      return this.tweetModel.find(filter);
+    }
 }

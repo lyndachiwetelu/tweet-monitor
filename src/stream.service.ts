@@ -27,6 +27,7 @@ export class StreamService {
   constructor(private readonly tweetService: TweetService) {}
 
   async streamTweets(): Promise<void> {
+    
     let currentRules = this.getRules()
     await this.deleteRules(currentRules)
     await this.setRules(this.newRules)
@@ -42,7 +43,7 @@ export class StreamService {
         const json = JSON.parse(data)
         const tweetDto = createTweetDtoFromJson(json)
         await this.tweetService.create(tweetDto)
-        console.log(json)
+        console.log(JSON.stringify(json))
       } catch (error) {}
     })
 
