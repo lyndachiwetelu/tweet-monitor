@@ -4,6 +4,7 @@ import { exit } from 'process';
 import { TweetService } from './tweet.service'
 import { createTweetDtoFromJson } from '../dto/create-tweet.dto'
 import * as dotenv from 'dotenv'
+import { Stream } from 'stream';
 dotenv.config()
 
 interface Rule {
@@ -27,7 +28,7 @@ export class StreamService {
   constructor(private readonly tweetService: TweetService) {}
 
   // stream tweets and save to DB tweets collection
-  async streamTweets(): Promise<void> {
+  async streamTweets(): Promise<Stream> {
     
     let currentRules = this.getRules()
     await this.deleteRules(currentRules)
@@ -46,7 +47,13 @@ export class StreamService {
         await this.tweetService.create(tweetDto)
         console.log(JSON.stringify(json))
       } catch (error) {}
+    }).on('error', error => {
+      if (error.code === 'ETIMEDOUT') {
+        tweetStream.emit('timeout');
+      }  
     })
+
+    return tweetStream
 
   }
 
@@ -119,4 +126,20 @@ export class StreamService {
       resolve(response.body);
     });
   }
+
+
+  // connect to stream and reconnect on error 
+  async connectToStream(): Promise<void> {
+    const stream = await this.streamTweets();
+    let timeout = 0;
+    stream.on('timeout', () => {
+        console.warn('Connection error occurred. Attempting to reconnect…');
+        setTimeout(() => {
+            timeout++;
+            this.streamTweets();
+        }, 2 ** timeout);
+        this.streamTweets();
+    })
+  }
+
 }

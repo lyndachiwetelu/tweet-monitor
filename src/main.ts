@@ -8,7 +8,7 @@ async function bootstrap() {
   const streamService = app.get(StreamService)
   const anomalyDetectionService = app.get(AnomalyDetectionService)
   const streamServicePromise = new Promise((resolve) => {
-      resolve(streamService.streamTweets())
+      resolve(streamService.connectToStream())
   })
   const anomalyDetectionServicePromise = new Promise((resolve) => {
     resolve(anomalyDetectionService.start())
