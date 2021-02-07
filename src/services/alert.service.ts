@@ -6,7 +6,7 @@ export class AlertService {
     // and could emit an event with a configured listener
     alert(details:any): void {
         console.log(
-            `[ALERT!!!] Tweets Toxicity level increased between ${details.fromDate} and ${details.toDate}
+            `[ALERT!!!] Tweets Toxicity numbers increased between ${details.fromDate} and ${details.toDate}
              from ${details.lastToxicityCount} to ${details.currentToxicityCount} Tweets`)
     }
 }

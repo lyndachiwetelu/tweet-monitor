@@ -12,6 +12,9 @@ export class Tweet {
   authorId: string;
 
   @Prop()
+  username: string;
+
+  @Prop()
   text: string;
 
   @Prop()
