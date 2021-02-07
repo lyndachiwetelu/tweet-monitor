@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Tweet } from './schemas/tweet.schema';
+import { Tweet } from '../schemas/tweet.schema';
 import { TweetService } from './tweet.service'
 import * as moment from 'moment'
 import { ToxicityService } from './toxicity.service';
@@ -13,6 +13,7 @@ export class AnomalyDetectionService {
         private readonly alertService: AlertService,
         private readonly metricService: MetricService ) {}
 
+    // Set the detection process to run every 10 minutes, this is static but can easily be confiured in .env
     start(): void {
         this.detectAnomalies()
         setInterval(() => {
@@ -20,6 +21,8 @@ export class AnomalyDetectionService {
         }, 600000);
     }
 
+    // Detect anomalies in terms of toxicity of tweets every 10 minutes and trigger an alert
+    // This method also save every result iteration in the metrics collection(DB)
     async detectAnomalies(): Promise<void> {
         const fromDate = moment().subtract(10, 'minutes').format()
         const toDate = moment().format()

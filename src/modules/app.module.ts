@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { StreamService } from './stream.service';
-import { TweetService } from './tweet.service';
+import { AppController } from '../controllers/app.controller';
+import { StreamService } from '../services/stream.service';
+import { TweetService } from '../services/tweet.service';
 import { TweetModule } from './tweet.module'
-import { AnomalyDetectionService } from './anomaly.detection.service'
-import { ToxicityService } from './toxicity.service';
-import { AlertService } from './alert.service';
+import { AnomalyDetectionService } from '../services/anomaly.detection.service'
+import { ToxicityService } from '../services/toxicity.service';
+import { AlertService } from '../services/alert.service';
 import { MetricModule } from './metric.module';
-import { MetricService } from './metric.service';
+import { MetricService } from '../services/metric.service';
 
 const mongoOptions = {
   authSource: 'admin'

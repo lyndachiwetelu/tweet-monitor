@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Tweet } from './schemas/tweet.schema';
+import { Tweet } from '../schemas/tweet.schema';
 import '@tensorflow/tfjs-node'
 import '@tensorflow/tfjs';
 import * as toxicity from '@tensorflow-models/toxicity';
 
 @Injectable()
 export class ToxicityService {
+    // Check Toxicity of an array of input text, ans return array with results ordered by original array indices
     async checkToxicity(tweets: Tweet[]): Promise<Array<Array<boolean>>> {
 
         const texts = tweets.map(tweet => tweet.text)

@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { StreamService } from './stream.service'
-import { AnomalyDetectionService } from './anomaly.detection.service'
+import { AppModule } from './modules/app.module';
+import { StreamService } from './services/stream.service'
+import { AnomalyDetectionService } from './services/anomaly.detection.service'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

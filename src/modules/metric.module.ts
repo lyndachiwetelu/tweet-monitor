@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Metric, MetricSchema } from './schemas/metric.schema';
+import { Metric, MetricSchema } from '../schemas/metric.schema';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: Metric.name, schema: MetricSchema }])],

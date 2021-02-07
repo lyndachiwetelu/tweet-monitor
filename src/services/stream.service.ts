@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as needle from 'needle'
 import { exit } from 'process';
 import { TweetService } from './tweet.service'
-import { createTweetDtoFromJson } from './dto/create-tweet.dto'
+import { createTweetDtoFromJson } from '../dto/create-tweet.dto'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -26,6 +26,7 @@ export class StreamService {
 
   constructor(private readonly tweetService: TweetService) {}
 
+  // stream tweets and save to DB tweets collection
   async streamTweets(): Promise<void> {
     
     let currentRules = this.getRules()
@@ -49,6 +50,7 @@ export class StreamService {
 
   }
 
+  // Set Rules for the Twitter API
   async setRules(rules: Array<Rule>): Promise<Object> {
     const data = {
       add: rules,
@@ -73,6 +75,7 @@ export class StreamService {
     
   }
 
+  // get rules from the Twitter API
   async getRules(): Promise<Rules> {
     try {
       const response = await needle('get', this.twitterRulesUrl, {
@@ -91,6 +94,7 @@ export class StreamService {
     }
   }
 
+  // Delete Rules from the Twitter API
   async deleteRules(rulesPromise: Promise<Rules>): Promise<Rules>  {
     const rules = await rulesPromise
     if (!Array.isArray(rules.data)) {
