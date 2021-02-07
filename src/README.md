@@ -46,9 +46,10 @@ This app saves tweets to a MongoDB store. The data Structure is
   username: string;
   text: string;
   createdAt: Date;
+  fetchedAt: Date;
 }
 ```
-With small naming changes, this datastore can be extended to save for Facebook, Instagram and Youtube as it is saving the most important bits which is the tweetId or postId, authorId in case we need to retrieve details for the author later, username which is good to have as it hardly changes and can be used in linking to the tweet/post, and the actual tweet or post and then date of creation. It is also super easy to extend this data store with more fields.
+With small naming changes, this datastore can be extended to save for Facebook, Instagram and Youtube as it is saving the most important bits which is the tweetId or postId, authorId in case we need to retrieve details for the author later, username which is good to have as it hardly changes and can be used in linking to the tweet/post, and the actual tweet or post, and then date of creation of tweet and date it was fetched/saved. It is also super easy to extend this data store with more fields.
 
 ## Anomaly detection 
 Every 10 minutes, a process which was implemented with a simple setInterval checks for anomalies in the numbers of tweets. For the purposes of testing, I chose toxicity of tweets as the metric. So this app checks for toxic tweets every interval and triggers an alert if there is a change(Increase).

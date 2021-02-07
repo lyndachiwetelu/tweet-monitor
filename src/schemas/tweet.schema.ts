@@ -19,6 +19,9 @@ export class Tweet {
 
   @Prop()
   createdAt: Date;
+
+  @Prop()
+  fetchedAt: Date;
 }
 
 export const TweetSchema = SchemaFactory.createForClass(Tweet);

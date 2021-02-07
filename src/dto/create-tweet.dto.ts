@@ -1,9 +1,12 @@
+import * as moment from 'moment'
+
 export class CreateTweetDto {
     tweetId: string;
     authorId: string;
     username: string;
     text: string;
-    createdAt: Date
+    createdAt: Date;
+    fetchedAt: Date;
   }
 
 export function createTweetDtoFromJson(json: any): CreateTweetDto
@@ -17,6 +20,7 @@ export function createTweetDtoFromJson(json: any): CreateTweetDto
     tweetDto.username = user.username
     tweetDto.text = data.text
     tweetDto.createdAt = data.created_at
+    tweetDto.fetchedAt = new Date()
 
     return tweetDto
 }
