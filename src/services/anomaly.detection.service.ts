@@ -5,6 +5,9 @@ import * as moment from 'moment'
 import { ToxicityService } from './toxicity.service';
 import { AlertService } from './alert.service';
 import { MetricService } from './metric.service';
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 
 @Injectable()
 export class AnomalyDetectionService {
@@ -13,18 +16,20 @@ export class AnomalyDetectionService {
         private readonly alertService: AlertService,
         private readonly metricService: MetricService ) {}
 
-    // Set the detection process to run every 10 minutes, this is static but can easily be confiured in .env
+    interval:number = parseInt(process.env.INTERVAL) || 10
+
+    // Set the detection process to run every interval minutes
     start(): void {
         this.detectAnomalies()
         setInterval(() => {
             this.detectAnomalies()
-        }, 600000);
+        }, this.interval * 60000);
     }
 
     // Detect anomalies in terms of toxicity of tweets every 10 minutes and trigger an alert
     // This method also save every result iteration in the metrics collection(DB)
     async detectAnomalies(): Promise<void> {
-        const fromDate = moment().subtract(10, 'minutes').format()
+        const fromDate = moment().subtract(this.interval, 'minutes').format()
         const toDate = moment().format()
         const tweets: Array<Tweet> = await this.tweetService.getForTimeFrame({'createdAt': {'$gte': fromDate, '$lte': toDate }})
         let countToxicTweets = 0

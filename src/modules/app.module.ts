@@ -9,6 +9,11 @@ import { ToxicityService } from '../services/toxicity.service';
 import { AlertService } from '../services/alert.service';
 import { MetricModule } from './metric.module';
 import { MetricService } from '../services/metric.service';
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+const mongoUser = process.env.DB_USER
+const mongoUserPass = process.env.DB_USER_PASS
 
 const mongoOptions = {
   authSource: 'admin'
@@ -18,7 +23,7 @@ const mongoOptions = {
   imports: [
     TweetModule,
     MetricModule,
-    MongooseModule.forRoot('mongodb://root:1234@localhost:27017/tweet-monitor', mongoOptions),
+    MongooseModule.forRoot(`mongodb://${mongoUser}:${mongoUserPass}@localhost:27017/tweet-monitor`, mongoOptions),
   ],
   controllers: [AppController],
   providers: [TweetService, StreamService, AnomalyDetectionService, ToxicityService, AlertService, MetricService],

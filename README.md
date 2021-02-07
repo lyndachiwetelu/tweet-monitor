@@ -1,3 +1,13 @@
+____
+____________________________________________________________________
+
+
+About Application README [can be found here](https://github.com/lyndachiwetelu/tweet-monitor/blob/master/src/README.md)
+
+
+____________________________________________________________________
+____________________________________________________________________
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
