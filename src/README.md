@@ -13,7 +13,7 @@ With this app you can monitor a hashtag on twitter and see alerts when some anom
 
 ⋅⋅⋅Then run `use admin` and press enter, then, run 
 
-`db.createUser({user: "root", pwd: "1234", roles: [{role: "readWrite", db: “tweet-monitor”}]})` 
+`db.createUser({user: "root", pwd: "1234", roles: [{role: "readWrite", db: "tweet-monitor"},{ role: "readWrite", db: "archive" }]})` 
 
 to create the user.
 
@@ -66,6 +66,18 @@ Every 10 minutes, a process which was implemented with a simple setInterval chec
 ## To quickly see results for anomaly detection:
  - you may modify the `INTERVAL` in the `.env` file to the number of minutes you want it to check results for,
  - and also use a controversial hashtag e.g #donaldtrump which as said before you should do by adding it to your `.env` file without the hash under `HASHTAG`. You can also use terms like `idiot` to test the toxicity checking.
+
+## Archiving 
+ when data for tweets reaches 100,000 older data will be continuously archived to a different database. In real world situation this database can live on a different server and be assigned less resources than the active one. Which can significantly boost performance. The archive database is just a dump for older tweets. Data Structure looks like this 
+ ```
+{
+  data: Object;
+  type: string;
+  createdAt: Date;
+}
+ ```
+ `data` is the tweet document from the active tweets database, `type` is 'tweet' and `createdAt` is Date of Archiving.
+ To test the archiving use smaller number than 100000 in `.env` for `TWEET_DATA_LIMIT`
 
 
  ## To stop the app:

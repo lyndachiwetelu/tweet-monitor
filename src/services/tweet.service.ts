@@ -17,6 +17,18 @@ export class TweetService {
       return this.tweetModel.find(filter);
     }
 
+    async countItems(): Promise<number> {
+      return this.tweetModel.countDocuments()
+    }
+
+    async getOlderTweets(offset:number): Promise<Tweet[]> {
+      return this.tweetModel.find().sort({createdAt: -1}).skip(offset)
+    }
+
+    async remove(tweet:Tweet) {
+      return this.tweetModel.deleteOne(tweet)
+    }
+
     // needed for mocking. there may be a more elegant way
     static createInstanceWithoutConstructor() {
       return Object.create(this.prototype);
