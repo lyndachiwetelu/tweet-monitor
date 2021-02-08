@@ -89,5 +89,5 @@ Every 10 minutes, a process which was implemented with a simple setInterval chec
 ## Further Notes:
 - Due to a lack of time, I have not implemented worker threads for this but I looked into it for a bit and how and if they might possibly work for this as an improvement
 - I have also not implemented a sophisticated trigger. It console.logs only. this is deliberate as I guess the point is it is triggered at the right time 
-- Error Handling in a production App would be much much better 
+- Error Handling in a production App would be much much better. Logging also. 
 - Notes on the PR are very much welcome. It is my first foray into Nestjs and I would love to know how to do things better.
