@@ -1,6 +1,12 @@
 ## About this App
 With this app you can monitor a hashtag on twitter and see alerts when some anomaly occurs for that hashtag. It is built with Nestjs and Mongodb. You can see the README for Nestjs related stuff [here](https://github.com/lyndachiwetelu/tweet-monitor/blob/master/README.md)
 
+### Technologies used
+ - Mongodb for data storage
+ - TensorFlow.js for sentiment analysis
+ - Twitter API
+ - Node via NestJS - Server, Code Structure
+
 ## How it works
 - With the Twitter streaming API, this app streams tweets in real time, and saves them to a NOSQL Data Store. Mongodb in this case. It then tries to detect some kind of anomalies.
 
